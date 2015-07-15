@@ -4,23 +4,25 @@ import {Link} from 'react-router';
 import immutable from 'immutable';
 import DocumentTitle from 'react-document-title';
 
+import './bigtext.styl';
+
 class BigText extends Component {
 
   static propTypes = {
-    // currentChapter: React.PropTypes.instanceOf(Chapter),
-    // prevChapter: React.PropTypes.instanceOf(Chapter),
-    // nextChapter: React.PropTypes.instanceOf(Chapter),
+    currChapter: React.PropTypes.instanceOf(immutable.Record).isRequired,
+    prevChapter: React.PropTypes.instanceOf(immutable.Record),
+    nextChapter: React.PropTypes.instanceOf(immutable.Record),
   };
 
   render() {
-    const {currentChapter, prevChapter, nextChapter} = this.props;
+    const {currChapter, prevChapter, nextChapter} = this.props;
 
     return (
-      <div>
-
-        { currentChapter.body }
-
-      </div>
+      <section className="big-text">
+        { prevChapter ? prevChapter.body : '' }
+        { currChapter.body }
+        { nextChapter ? nextChapter.body : '' }
+      </section>
     );
   }
 

@@ -46,7 +46,8 @@ module.exports = function(isDevelopment) {
         loader: isDevelopment ?
           'style-loader!' + stylusLoaders
           : stylusLoaders,
-      }]
+      }
+      ]
     },
     output: isDevelopment ? {
       path: path.join(__dirname, '/build/'),

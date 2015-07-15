@@ -1,34 +1,48 @@
 import Component from '../components/component.react';
+import DocumentTitle from 'react-document-title';
+import BigText from '../chapter/bigtext.react';
+import GoogleMap from '../map/googlemap.react.js';
+import NotFound from '../pages/notfound.react';
 import React from 'react';
 import {Link} from 'react-router';
 import immutable from 'immutable';
-import DocumentTitle from 'react-document-title';
-import BigText from '../chapter/bigtext.react';
 
 class Chapter extends Component {
 
   static propTypes = {
     title: React.PropTypes.string,
-    currentChapter: React.PropTypes.instanceOf(Chapter),
-    prevChapter: React.PropTypes.instanceOf(Chapter),
-    nextChapter: React.PropTypes.instanceOf(Chapter),
+    currChapter: React.PropTypes.instanceOf(immutable.Record),
+    prevChapter: React.PropTypes.instanceOf(immutable.Record),
+    nextChapter: React.PropTypes.instanceOf(immutable.Record),
   };
 
   render() {
     const book = this.props.book;
     const {title, chapters} = book;
-    const currentChapter = chapters.find((chap) => chap.id == this.props.params.id);
-    const prevChapter = chapters.get(chapters.indexOf(currentChapter) - 1);
-    const nextChapter = chapters.get(chapters.indexOf(currentChapter) + 1);
+    const currChapter = chapters.find((chap) => chap.id == this.props.params.id);
+
+    if (!currChapter) {
+        return <NotFound />;
+    }
+
+    const prevChapter = chapters.get(chapters.indexOf(currChapter) - 1);
+    const nextChapter = chapters.get(chapters.indexOf(currChapter) + 1);
+
+    const mapData = {
+        layerUrl: currChapter.map.layerUrl,
+        markers: currChapter.map.places,
+        zoom: 6,
+        place: this.props.params.place,
+    }
 
     return (
-        <DocumentTitle title="{ title }: { currentChapter.title }">
-            <div class="chapter-page">
-                <h1>{ title }: { currentChapter.title }</h1>
-
+        <DocumentTitle title={ title + ': ' + currChapter.title }>
+            <div className="chapter-page">
+                <h1>{ title }: { currChapter.title }</h1>
                 <BigText prevChapter={prevChapter}
-                         currentChapter = {currentChapter}
+                         currChapter = {currChapter}
                          nextChapter = {nextChapter} />
+                <GoogleMap {...mapData} />
             </div>
         </DocumentTitle>
     );

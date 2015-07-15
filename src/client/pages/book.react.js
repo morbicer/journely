@@ -17,7 +17,7 @@ class Book extends Component {
 
     return (
         <DocumentTitle title={ title }>
-            <div class="book-page">
+            <div className="book-page">
             <h1>{ title }</h1>
 
               <ol>

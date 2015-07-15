@@ -4,7 +4,7 @@
     // Stage 1 - Proposal
     "es7.decorators",
     "es7.classProperties",
-    // Stage 0 - Strawman
-    "es7.functionBind"
+    "es7.objectRestSpread"
+
   ]
 }

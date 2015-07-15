@@ -13,6 +13,7 @@ export default class Html extends React.Component {
           <title>Journely</title>
           {isProduction &&
             <link href={`/build/app.css?v=${version}`} rel="stylesheet"/>}
+          <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
         </head>
         <body>
           <div id="app-root" />
