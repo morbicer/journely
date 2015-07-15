@@ -8,10 +8,7 @@ import {appState} from '../state';
 
 
 // All stores must be imported here.
-// import '../auth/store';
-// import '../examples/store';
-// import '../todos/store';
-// import '../users/store';
+import '../chapter/store';
 
 class App extends Component {
 

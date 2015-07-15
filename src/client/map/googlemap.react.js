@@ -50,6 +50,8 @@ class GoogleMap extends Component {
         center = markers.get(0).position;
     }
 
+    const router = this.context.router;
+
     function toMarker(marker, index) {
           return (
             <Marker
@@ -57,7 +59,7 @@ class GoogleMap extends Component {
               key={marker.name}
               animation={marker.animation}
               title={marker.name}
-              onClick={() => actions.selectMarker(marker)}
+              onClick={() => actions.selectMarker(marker, router)}
                />
           );
     }

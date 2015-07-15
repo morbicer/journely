@@ -1,6 +1,5 @@
 import {dispatch} from '../dispatcher';
 
-export function selectMarker(marker) {
-  console.log(marker);
-  dispatch('SELECT_MARKER', marker);
+export function selectMarker(marker, router) {
+  dispatch('SELECT_MARKER', {marker, router});
 }

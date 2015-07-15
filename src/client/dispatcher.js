@@ -4,14 +4,11 @@ import {Dispatcher} from 'flux';
 const dispatcher = new Dispatcher;
 const isDev = 'production' !== process.env.NODE_ENV;
 
-export function register(callback: Function): string {
+export function register(callback): string {
   return dispatcher.register(callback);
 }
 
-export function dispatch(action: Function, data: ?Object, options: ?Object) {
-  if (isDev && action.toString === Function.prototype.toString)
-    throw new Error(`Action ${action} toString method has to be overridden by setToString.`);
-
+export function dispatch(action, data, options) {
   const looksLikePromise = data && typeof data.then === 'function';
   if (looksLikePromise)
     return dispatchAsync(action, data, options);
@@ -19,11 +16,11 @@ export function dispatch(action: Function, data: ?Object, options: ?Object) {
     dispatchSync(action, data);
 }
 
-export function waitFor(ids: Array) {
+export function waitFor(ids) {
   dispatcher.waitFor(ids);
 }
 
-function dispatchAsync(action: Function, promise: Object, options: ?Object) {
+function dispatchAsync(action, promise, options) {
   const actionName = action.toString();
 
   if (isDev) console.log(`pending ${actionName}`); // eslint-disable-line no-console
@@ -51,7 +48,7 @@ function dispatchAsync(action: Function, promise: Object, options: ?Object) {
 //   });
 // }
 
-function dispatchSync(action: Function, data: ?Object) {
+function dispatchSync(action, data) {
   if (isDev) console.log(action.toString()); // eslint-disable-line no-console
   // if (isDev) console.log(action.toString(), data); // eslint-disable-line no-console
   dispatcher.dispatch({action, data});

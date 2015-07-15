@@ -10,7 +10,7 @@ export default (
     <DefaultRoute handler={Book} name="home" />
     <NotFoundRoute handler={NotFound} name="not-found" />
     <Route handler={Book} name="book" />
-    <Route handler={Chapter} name="chapter" path="/book/chapter/:id" />
-    <Route handler={Chapter} name="chapter-place" path="/book/chapter/:id/:place" />
+    <Route handler={Chapter} name="chapter" path="book/chapter/:id" />
+    <Route handler={Chapter} name="chapter-place" path="book/chapter/:id/:place" />
   </Route>
 );
