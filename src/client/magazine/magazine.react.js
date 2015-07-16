@@ -1,13 +1,13 @@
 import Component from '../components/component.react';
 import DocumentTitle from 'react-document-title';
-import BigText from '../chapter/bigtext.react';
+import BigText from './bigtext.react';
 import GoogleMap from '../map/googlemap.react.js';
 import NotFound from '../pages/notfound.react';
 import React from 'react';
 import {Link} from 'react-router';
 import immutable from 'immutable';
 
-class Chapter extends Component {
+class Magazine extends Component {
 
   static propTypes = {
     title: React.PropTypes.string,
@@ -15,6 +15,14 @@ class Chapter extends Component {
     prevChapter: React.PropTypes.instanceOf(immutable.Record),
     nextChapter: React.PropTypes.instanceOf(immutable.Record),
   };
+
+  componentWillUpdate(nextProps, nextState) {
+    const {id, place} = nextProps.params;
+    if (!id && place) {
+        this.context.router.replaceWith('chapter-place', {id: 1, place: place});
+        nextProps.params.id = 1;
+    }
+  }
 
   render() {
     const book = this.props.book;
@@ -50,4 +58,4 @@ class Chapter extends Component {
 
 }
 
-export default Chapter;
+export default Magazine;

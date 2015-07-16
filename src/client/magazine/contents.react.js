@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 import immutable from 'immutable';
 import DocumentTitle from 'react-document-title';
 
-class Book extends Component {
+class Contents extends Component {
 
   static propTypes = {
     title: React.PropTypes.string,
@@ -34,4 +34,4 @@ class Book extends Component {
 
 }
 
-export default Book;
+export default Contents;

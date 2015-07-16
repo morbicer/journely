@@ -59,7 +59,7 @@ class GoogleMap extends Component {
               key={marker.name}
               animation={marker.animation}
               title={marker.name}
-              onClick={() => actions.selectMarker(marker, router)}
+              onClick={() => actions.selectMarker(marker)}
                />
           );
     }
