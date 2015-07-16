@@ -16,18 +16,42 @@ class Magazine extends Component {
     nextChapter: React.PropTypes.instanceOf(immutable.Record),
   };
 
+  findChapter(id) {
+    return this.props.book.chapters.find((chap) => chap.id == id);
+  }
+
   componentWillUpdate(nextProps, nextState) {
     const {id, place} = nextProps.params;
+    let newId;
+
     if (!id && place) {
-        this.context.router.replaceWith('chapter-place', {id: 1, place: place});
-        nextProps.params.id = 1;
+        const currId = this.props.params.id;
+        if (currId) {
+            const inCurrent = this.findChapter(currId)
+                                .get('map').places
+                                .find(p => p.name == place);
+            if (inCurrent) {
+                newId = currId;
+            }
+        }
+
+        if (!newId) {
+            const newChapter = this.props.book.chapters.find(chap => {
+                const inChapter = chap.get('map').places.find(p => p.name == place);
+                return (inChapter != null)
+            });
+            newId = newChapter.id;
+        }
+
+        this.context.router.replaceWith('chapter-place', {id: newId, place: place});
+        nextProps.params.id = newId;
     }
   }
 
   render() {
     const book = this.props.book;
     const {title, chapters} = book;
-    const currChapter = chapters.find((chap) => chap.id == this.props.params.id);
+    const currChapter = this.findChapter(this.props.params.id);
 
     if (!currChapter) {
         return <NotFound />;
@@ -38,7 +62,7 @@ class Magazine extends Component {
 
     const mapData = {
         layerUrl: currChapter.map.layerUrl,
-        markers: currChapter.map.places,
+        markers: chapters.flatMap(chap => chap.get('map').places),
         zoom: 6,
         place: this.props.params.place,
     }

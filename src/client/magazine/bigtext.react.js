@@ -1,4 +1,5 @@
 import Component from '../components/component.react';
+import Chapter from './chapter.react';
 import React from 'react';
 import {Link} from 'react-router';
 import immutable from 'immutable';
@@ -19,9 +20,9 @@ class BigText extends Component {
 
     return (
       <section className="big-text">
-        { prevChapter ? prevChapter.body : '' }
-        { currChapter.body }
-        { nextChapter ? nextChapter.body : '' }
+        { prevChapter ? <Chapter {...prevChapter.toObject()} /> : '' }
+        <Chapter {...currChapter.toObject()} />
+        { nextChapter ? <Chapter {...nextChapter.toObject()} /> : '' }
       </section>
     );
   }

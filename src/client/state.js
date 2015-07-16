@@ -45,7 +45,6 @@ class State extends EventEmitter {
                         places: new List([
                             new Place({name: 'Piha', position: {lng: 174, lat: -36}}),
                             new Place({name: 'Bethells Beach', position: {lng: 174.4487382, lat: -36.8921495}}),
-                            new Place({name: 'Hunua Ranges', position: {lng: 175.1554964, lat: -37.0476228}}),
                         ])
                     })
                 }),
@@ -56,8 +55,6 @@ class State extends EventEmitter {
                     map: new MapData({
                         layerUrl: 'http://editor.new.jukeboxprint.com/nz4.kml',
                         places: new List([
-                            new Place({name: 'Piha', position: {lng: 174.4688092, lat: -36.9530211}}),
-                            new Place({name: 'Bethells Beach', position: {lng: 174.4487382, lat: -36.8921495}}),
                             new Place({name: 'Hunua Ranges', position: {lng: 175.1554964, lat: -37.0476228}}),
                         ])
                     })
