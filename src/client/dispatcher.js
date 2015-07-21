@@ -20,6 +20,10 @@ export function waitFor(ids) {
   dispatcher.waitFor(ids);
 }
 
+export function isDispatching() {
+    return dispatcher.isDispatching();
+}
+
 function dispatchAsync(action, promise, options) {
   const actionName = action.toString();
 
@@ -49,7 +53,7 @@ function dispatchAsync(action, promise, options) {
 // }
 
 function dispatchSync(action, data) {
-  if (isDev) console.log(action.toString()); // eslint-disable-line no-console
+  if (isDev) console.log(action.toString(), data); // eslint-disable-line no-console
   // if (isDev) console.log(action.toString(), data); // eslint-disable-line no-console
   dispatcher.dispatch({action, data});
 }

@@ -14,7 +14,8 @@ class GoogleMap extends Component {
     center: React.PropTypes.object,
     zoom: React.PropTypes.number,
     layerUrl: React.PropTypes.string,
-    markers: immutable.List,
+    markers: React.PropTypes.instanceOf(immutable.List),
+    activePlace: React.PropTypes.instanceOf(immutable.Record),
   };
 
   componentWillUpdate () {
@@ -22,12 +23,11 @@ class GoogleMap extends Component {
         const layer = new google.maps.KmlLayer({
             url: this.props.layerUrl,
             suppressInfoWindows: true,
-            preserveViewport: (this.props.place) ? true : false,
+            preserveViewport: (this.props.activePlace) ? true : false,
             map: this.refs.map.state.instance
         });
 
         google.maps.event.addListener(layer, 'click', (kmlEvent) => {
-            const place = kmlEvent.featureData.name;
             console.log(kmlEvent)
         });
     }
@@ -39,15 +39,13 @@ class GoogleMap extends Component {
       className: "full-map",
     }
 
-    let {center, zoom, place, markers} = this.props;
+    const RED_ICON = "http://maps.google.com/mapfiles/ms/micons/red-dot.png";
+    const GREEN_ICON = "http://maps.google.com/mapfiles/ms/micons/green-dot.png";
 
-    if (place) {
-        const activePlace = markers.find((plc) => plc.name == place);
-        if (activePlace) center = activePlace.position;
-        zoom = 9;
-    }
-    if (!center && markers) {
-        center = markers.get(0).position;
+    let {center, zoom, markers, activePlace} = this.props;
+
+    if (!center && activePlace) {
+        center = activePlace.position;
     }
 
     const router = this.context.router;
@@ -60,6 +58,7 @@ class GoogleMap extends Component {
               animation={marker.animation}
               title={marker.name}
               onClick={() => actions.selectMarker(marker)}
+              icon={(marker == activePlace) ? GREEN_ICON : RED_ICON}
                />
           );
     }
@@ -72,7 +71,7 @@ class GoogleMap extends Component {
         }
         zoom={zoom}
         center={center} >
-        {markers.map(toMarker, this)}
+        {markers.map(toMarker)}
       </GoogleMaps>
     );
   }
